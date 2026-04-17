@@ -7,16 +7,9 @@ export default function Login({ setIsAuth }) {
 
   const login = async () => {
     try {
-      // 🔥 VIKTIG: form-data (ikke JSON)
-      const formData = new URLSearchParams();
-      formData.append("username", username);
-      formData.append("password", password);
-      formData.append("grant_type", "password");
-
-      const res = await API.post("/auth/login", formData, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+      const res = await API.post("/auth/login", {
+        username: username,
+        password: password,
       });
 
       console.log("SUCCESS:", res.data);
@@ -35,15 +28,18 @@ export default function Login({ setIsAuth }) {
   return (
     <div>
       <h2>Login</h2>
+
       <input
         onChange={(e) => setUsername(e.target.value)}
         placeholder="username"
       />
+
       <input
         onChange={(e) => setPassword(e.target.value)}
         placeholder="password"
         type="password"
       />
+
       <button onClick={login}>Login</button>
     </div>
   );
